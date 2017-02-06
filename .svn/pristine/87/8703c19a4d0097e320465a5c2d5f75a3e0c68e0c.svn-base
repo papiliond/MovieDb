@@ -1,0 +1,113 @@
+﻿body {
+    padding-top: 85px;
+    padding-bottom: 150px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 5px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Főoldal: Index -nél kezdtem*/
+div.img {
+    border: 1px solid #ccc;
+    float: left;
+    width: 202px;
+    margin: 5% 5% 5% 5%;
+}
+
+div.img:hover {
+    border: 1px solid #777;
+}
+
+div.img img {
+ 
+position: relative;
+    float: left;
+    width:  200px;
+    height: 300px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+    margin-bottom: 6%;
+}
+
+div.desc {
+    padding: 5px;
+    text-align: center;
+}
+
+h5 {
+    
+    font-size: small;
+}
+
+h6{
+   
+    font-size: small;
+}
+
+/* Film infói - Details-nél*/
+
+div.descript {
+    margin-left: 10%;
+    padding-left: 27%;
+}
+
+div.cover {
+    margin-right: 10%;
+}
+
+div.main {
+    padding-bottom: 37%; 
+}
+
+/*_Layout-nál*/
+.mainsearch {
+    width: 130px;
+    height: 28px;
+    margin-top: 11px;
+    margin-left: 160px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: white;
+    background-image: url('/Content/Images/searchicon.png');
+    background-position: 6px -1px; 
+    background-repeat: no-repeat;
+    padding: 2px 20px 2px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.mainsearch:focus {
+    width: 100%;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size: x-large;
+  
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}

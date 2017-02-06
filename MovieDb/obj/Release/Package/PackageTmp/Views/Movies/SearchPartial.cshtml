@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+@using (Html.BeginForm("Search","Movies"))
+{
+    @Html.AntiForgeryToken()
+
+        @Html.TextBox("SearchText", null, new { @class="mainsearch", placeholder = "Search"})
+    <input class="searchbutton" type="submit" value="Go!" />
+
+}

@@ -1,0 +1,16 @@
+﻿@using MovieDb.ViewModels
+@model MovieDb.ViewModels.MovieActorViewModel
+
+@{
+    ViewBag.Title = "ToFavorites";
+}
+
+<h4>You want to add the following movie to your favorites:</h4>
+<h2>@Html.DisplayFor(model => model.Movie.Title)</h2>
+
+
+
+
+
+
+

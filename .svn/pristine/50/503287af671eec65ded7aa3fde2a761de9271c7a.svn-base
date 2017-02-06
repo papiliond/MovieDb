@@ -1,0 +1,73 @@
+﻿@using MovieDb.ViewModels
+@model MovieDb.ViewModels.MovieViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Html.DisplayFor(model => model.Movie.Title)</h2>
+<h4>@Convert.ToString(string.Format("{0:yyyy}", Model.Movie.ReleaseDate))</h4>
+<hr />
+<div class="main">
+    
+    <div style="cover">
+        <img src="@Html.DisplayFor(model => model.Movie.CoverPicture)"
+             align="left" width="35%" height="35%" />
+    </div>
+
+    <div class="descript">
+    <dl >
+        <dt>
+            Genre: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie.GenreName)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.ReleaseDate)
+        </dt>
+
+        <dd>
+           @Convert.ToString(string.Format("{0:d MMMM yyyy}", Model.Movie.ReleaseDate))
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie.Description)
+        </dd>
+
+        <dt>
+            Stars
+        </dt>
+
+        <dd>
+    @{ if (Model.Actors != null)
+        {
+            @Html.Partial("Actors", Model)
+        } }
+
+        </dd>
+
+
+    </dl>
+
+    @{ if (HttpContext.Current.User.IsInRole("Admin") || HttpContext.Current.User.IsInRole("DataManager"))
+        {
+
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Movie.ID }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+
+        }
+    }
+
+    </div>
+</div>
+

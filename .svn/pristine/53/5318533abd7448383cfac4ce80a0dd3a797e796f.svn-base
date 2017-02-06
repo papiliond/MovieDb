@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "SearchResult";
+}
+
+<h2>Search Results</h2>
+
+

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<MovieDb.Models.Movie>
+
+@{
+    ViewBag.Title = "Favorites";
+
+    if (Request.IsAuthenticated)
+    {
+
+<h3 style="border-bottom:dotted;padding-bottom:4px;">My Favorites</h3>
+        <hr />
+
+    if (Model != null)
+    {
+        @Html.Partial("~/Views/Movies/Listed.cshtml", Model)
+    } 
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

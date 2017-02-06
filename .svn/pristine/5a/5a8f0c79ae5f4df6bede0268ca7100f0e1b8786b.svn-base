@@ -1,0 +1,191 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using MovieDb.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using MovieDb.ViewModels;
+
+namespace MovieDb.Controllers
+{
+    public class MoviesController : Controller
+    {
+
+        protected ApplicationDbContext db = new ApplicationDbContext();
+        protected UserManager<ApplicationUser> um; 
+
+        // GET: Movies
+        public async Task<ActionResult> Index()
+        {
+          
+            var movies = db.Movies.Include(m => m.Genre);
+            return View(await movies.ToListAsync());
+
+        }
+
+        public async Task<ActionResult> Listed()
+        {
+
+            var movies = db.Movies.Include(m => m.Genre);
+            return View(await movies.ToListAsync());
+        }
+
+        public async Task<ActionResult> Favorites()
+        {
+
+            var genre = User.Identity.GetUserId();
+
+            return View();
+        }
+
+
+
+        // GET: Movies/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = await db.Movies.FindAsync(id);
+          
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            var actors = await db.Appearances.Include(a => a.Actor).Where(a => a.MovieId == movie.ID).Select(a => a.Actor).ToListAsync();
+
+            MovieActorViewModel movieActorViewModel = new MovieActorViewModel();
+            movieActorViewModel.Movie = movie;
+            movieActorViewModel.Actors = actors;
+
+
+            return View(movieActorViewModel);
+        }
+
+        public async Task<ActionResult> ToFavorites(int id)
+        {
+            Movie movie = await db.Movies.FindAsync(id);
+            var movies = db.Movies.Include(i => i.Users);
+            um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var users = db.Users.Include(i => i.Movies);
+            ApplicationUser user = await um.FindByIdAsync(User.Identity.GetUserId());
+            var userid = User.Identity.GetUserId();
+
+            if ( !movies.Any(i => i.Users.Any(u => u.Id == userid)) || 
+                !users.Any(i => i.Movies.Any(u => u.ID == movie.ID))) { 
+
+                movie.Users.Add(user);
+                user.Movies.Add(movie);
+                
+                await db.SaveChangesAsync();
+                }
+                //return View();
+                return RedirectToAction("Details", new { id = id });
+            
+        }
+
+
+
+
+
+        // GET: Movies/Create
+        public ActionResult Create()
+        {
+            ViewBag.GenreName = new SelectList(db.Genres, "Name", "Name");
+            return View();
+        }
+
+        // POST: Movies/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "ID,Title,ReleaseDate,Description,CoverPicture,GenreName")] Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Movies.Add(movie);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.GenreName = new SelectList(db.Genres, "Name", "Name", movie.GenreName);
+            return View(movie);
+        }
+
+        // GET: Movies/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = await db.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.GenreName = new SelectList(db.Genres, "Name", "Name", movie.GenreName);
+            return View(movie);
+        }
+
+        // POST: Movies/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "ID,Title,ReleaseDate,Description,CoverPicture,GenreName")] Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(movie).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.GenreName = new SelectList(db.Genres, "Name", "Name", movie.GenreName);
+            return View(movie);
+        }
+
+        // GET: Movies/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Movie movie = await db.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Movie movie = await db.Movies.FindAsync(id);
+            db.Movies.Remove(movie);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

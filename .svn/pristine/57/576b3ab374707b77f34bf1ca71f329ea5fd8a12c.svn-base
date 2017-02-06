@@ -1,0 +1,36 @@
+namespace MovieDb.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class CreateAppearance : DbMigration
+    {
+        public override void Up()
+        {
+
+            CreateTable(
+                "dbo.Appearance",
+                c => new
+                    {
+                        ActorId = c.Int(nullable: false),
+                        MovieId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.ActorId, t.MovieId })
+                .ForeignKey("dbo.Actor", t => t.ActorId, cascadeDelete: true)
+                .ForeignKey("dbo.Movie", t => t.MovieId, cascadeDelete: true)
+                .Index(t => t.ActorId)
+                .Index(t => t.MovieId);
+            
+        }
+        
+        public override void Down()
+        {
+            DropForeignKey("dbo.Appearance", "MovieId", "dbo.Movie");
+            DropForeignKey("dbo.Appearance", "ActorId", "dbo.Actor");
+            DropIndex("dbo.Appearance", new[] { "MovieId" });
+            DropIndex("dbo.Appearance", new[] { "ActorId" });
+            DropTable("dbo.Appearance");
+
+        }
+    }
+}

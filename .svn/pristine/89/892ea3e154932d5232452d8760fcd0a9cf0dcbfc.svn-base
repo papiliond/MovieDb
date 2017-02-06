@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MovieDb.Models.Movie>
+@{
+    ViewBag.Title = "Listed";
+}
+
+<table>
+    <tr>
+        @{ int i = 0;}
+        @foreach (var item in Model)
+        {
+            i++;
+            <td>
+                <div class="img">
+                    <a href="/Movies/Details/@item.ID" style="color:inherit;text-decoration:none;">
+                        <img src="@Html.DisplayFor(modelItem => item.CoverPicture)" />
+
+
+                        <div class="desc">
+                            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                            <h6>
+                                @Convert.ToString(string.Format("{0:yyyy}", item.ReleaseDate))
+                            </h6>
+                            <h6>@Html.DisplayFor(modelItem => item.Genre.Name)</h6>
+
+                        </div>
+                    </a>
+            </div>
+        </td>
+
+            if (i % 7 == 0)
+            {
+                @:</tr><tr>
+            }
+        }
+
+
+    </tr>
+
+
+</table>
+
+</div>

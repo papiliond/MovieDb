@@ -1,0 +1,26 @@
+﻿@model MovieDb.ViewModels.MovieActorViewModel
+
+
+@{
+    ViewBag.Title = "SendComment";
+}
+
+@using (Html.BeginForm("SendComment", "Movies", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Movie.ID)
+    <table>
+        <tr>
+            <td style="text-align:justify;"><h6 class="commenter">@HttpContext.Current.User.Identity.Name</h6></td>
+            <td>@Html.TextBoxFor(m => m.CommentText, null, new { @class = "sendcomment-box", placeholder = "Your comment..." })</td>
+            <td ><input type="submit" value="Send" class="btn btn-default2"/></td>
+        </tr>
+    </table>
+    
+    
+    
+    
+
+
+}
+

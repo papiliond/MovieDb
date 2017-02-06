@@ -1,0 +1,64 @@
+﻿@model MovieDb.ViewModels.MovieActorViewModel
+@using MovieDb.ViewModels
+
+
+@{
+    ViewBag.Title = "Comment_box";
+}
+
+<h2>Comment_box</h2>
+
+@{ if (Request.IsAuthenticated)
+    {
+
+        using (Html.BeginForm("CommentBox", "Movies"))
+        {
+<div>
+    <table class="commentbox">
+        <tr>
+            <td>Name</td>
+            <td>@HttpContext.Current.User.Identity.Name</td>
+        </tr>
+        <tr>
+            <td>Comment</td>
+            <td>@Html.TextBox("CommentText", null, new { placeholder = "Comment Text" })</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input class="sendcomment" type="submit" value="Send!" /></td>
+        </tr>
+    </table>
+</div>
+            }
+        }
+
+    }
+<table class="commentbox">
+    @if (Model.Comments != null) { 
+    foreach (var item in ViewBag.Comments)
+    {
+       
+        <tr>
+            <td>
+                Name
+            </td>
+            <td></td>
+        </tr>
+       <tr>
+         <td>
+            Date
+        </td>
+            <td></td>
+            </tr>
+            <tr>
+                <td> Comment:</td>
+
+
+                   <td></td>
+
+
+               </tr>
+            }
+       
+    }
+</table>

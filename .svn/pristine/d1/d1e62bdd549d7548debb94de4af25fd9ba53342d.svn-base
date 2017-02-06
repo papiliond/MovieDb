@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MovieDb.Models.Appearance>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{ if (HttpContext.Current.User.IsInRole("Admin"))
+    {
+
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Actor.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Movie.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Actor.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Movie.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  actorid = item.ActorId, movieid = item.MovieId }) |
+            @Html.ActionLink("Details", "Details", new { actorid = item.ActorId, movieid = item.MovieId }) |
+            @Html.ActionLink("Delete", "Delete", new { actorid = item.ActorId, movieid = item.MovieId })
+        </td>
+    </tr>
+}
+
+</table>
+
+        }
+    }

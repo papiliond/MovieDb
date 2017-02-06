@@ -1,0 +1,24 @@
+﻿@model MovieDb.ViewModels.MovieActorViewModel
+
+@{
+    ViewBag.Title = "Comments";
+
+    if (Model.Comments != null) {
+        foreach (var item in Model.Comments)
+        {
+
+        <table>
+            <tr >
+                <td style="border-color: steelblue;"><h6 class="commenter">@item.User.UserName</h6></td>
+                <td style="background-color:darkgray;width:300px;"> @item.Text</td> 
+            </tr>
+        </table>
+
+            }
+
+
+        }
+
+    }
+
+

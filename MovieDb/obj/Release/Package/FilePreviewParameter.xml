@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="myappismyapp" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\papil\\Source\\Repos\\OnlineFilmkatalogus\\MovieDb\\MovieDb\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\papil\\Source\\Repos\\OnlineFilmkatalogus\\MovieDb\\MovieDb\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\MovieDb_db.mdf;Initial Catalog=MovieDb_db;Integrated Security=True;MultipleActiveResultSets=true" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\papil\\Source\\Repos\\OnlineFilmkatalogus\\MovieDb\\MovieDb\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>
